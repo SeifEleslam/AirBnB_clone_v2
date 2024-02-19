@@ -24,12 +24,16 @@ class TestConsole(unittest.TestCase):
         arg_name = 'sad'
         arg_val = 'bad'
         with patch('sys.stdout', new=StringIO()) as f:
+            curr = len(storage.all())
             self.assertFalse(HBNBCommand().onecmd(
                 "create BaseModel {}={}".format(arg_name, arg_val)))
+            new = len(storage.all())
             model = storage.all()["BaseModel."+f.getvalue().strip()]
             self.assertIsNotNone(model)
             self.assertIsInstance(model, BaseModel)
             self.assertEqual(getattr(model, arg_name), arg_val)
+            self.assertEqual(new - curr, 1)
+
         output = "** class doesn't exist **"
         with patch('sys.stdout', new=StringIO()) as f:
             self.assertFalse(HBNBCommand().onecmd("create BaseMode"))
