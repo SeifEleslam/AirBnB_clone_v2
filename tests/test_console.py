@@ -21,16 +21,16 @@ class TestConsole(unittest.TestCase):
             model = storage.all()["BaseModel."+f.getvalue().strip()]
             self.assertIsNotNone(model)
             self.assertIsInstance(model, BaseModel)
-        arg_name = 'sad'
+        arg_name = 'first_name'
         arg_val = 'bad'
         with patch('sys.stdout', new=StringIO()) as f:
             curr = len(storage.all())
             self.assertFalse(HBNBCommand().onecmd(
-                "create BaseModel {}={}".format(arg_name, arg_val)))
+                "create User {}=\"{}\"".format(arg_name, arg_val)))
             new = len(storage.all())
-            model = storage.all()["BaseModel."+f.getvalue().strip()]
+            model = storage.all()["User."+f.getvalue().strip()]
             self.assertIsNotNone(model)
-            self.assertIsInstance(model, BaseModel)
+            self.assertIsInstance(model, User)
             self.assertEqual(getattr(model, arg_name), arg_val)
             self.assertEqual(new - curr, 1)
 

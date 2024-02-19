@@ -11,6 +11,8 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+from ast import literal_eval
+
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -135,6 +137,13 @@ class HBNBCommand(cmd.Cmd):
         for arg in args[1:]:
             (attr_name, sep, attr_val) = arg.partition('=')
             if not sep:
+                continue
+            try:
+                attr_val = literal_eval(attr_val)
+            except:
+                continue
+            if not (type(attr_val) is str or type(attr_val)
+                    is int or type(attr_val) is float):
                 continue
             setattr(new_instance, attr_name, attr_val)
         new_instance.save()
