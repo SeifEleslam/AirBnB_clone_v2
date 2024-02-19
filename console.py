@@ -136,8 +136,7 @@ class HBNBCommand(cmd.Cmd):
             (attr_name, sep, attr_val) = arg.partition('=')
             if not sep:
                 continue
-            if attr_name in HBNBCommand.types:
-                attr_val = HBNBCommand.types[attr_name](attr_val)
+
             setattr(new_instance, attr_name, attr_val)
         new_instance.save()
         print(new_instance.id)
