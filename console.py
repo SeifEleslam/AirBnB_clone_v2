@@ -145,7 +145,10 @@ class HBNBCommand(cmd.Cmd):
             if not (type(attr_val) is str or type(attr_val)
                     is int or type(attr_val) is float):
                 continue
+            if type(attr_val) is str:
+                attr_val = attr_val.replace('_', ' ')
             setattr(new_instance, attr_name, attr_val)
+
         new_instance.save()
         print(new_instance.id)
 
