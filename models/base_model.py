@@ -6,6 +6,7 @@ from datetime import datetime
 
 class BaseModel:
     """A base class for all hbnb models"""
+
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
         if not kwargs:
@@ -31,6 +32,7 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
+        storage.new(self)
         storage.save()
 
     def to_dict(self):
