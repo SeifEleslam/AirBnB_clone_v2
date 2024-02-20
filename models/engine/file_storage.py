@@ -20,6 +20,8 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Deletes an object from the storage by its id or all objects"""
+        if obj is None:
+            return
         del self.__objects['{}.{}'.format(type(obj).__name__, obj.id)]
         self.save()
 
