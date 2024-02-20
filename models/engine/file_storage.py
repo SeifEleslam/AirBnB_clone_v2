@@ -14,7 +14,7 @@ class FileStorage:
             return self.__objects
         obj = {}
         for key in self.__objects:
-            if key.partition('.')[0] == cls:
+            if key.partition('.')[0] == cls.__name__:
                 obj[key] = self.__objects[key]
         return obj
 
