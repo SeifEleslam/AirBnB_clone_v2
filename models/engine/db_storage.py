@@ -16,7 +16,7 @@ class DBStorage:
     """Class for handling db engine"""
     __engine = None
     __session = None
-    __tables = [City, State, User]
+    __tables = [City, State, User, Place]
 
     def __init__(self):
         """Initializing The class based on env variables"""
