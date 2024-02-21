@@ -15,6 +15,7 @@ class DBStorage:
     """Class for handling db engine"""
     __engine = None
     __session = None
+    __tables = [City, State]
 
     def __init__(self):
         """Initializing The class based on env variables"""
@@ -32,9 +33,9 @@ class DBStorage:
     def all(self, cls=None):
         """Return all instances of a model."""
         if cls is None:
-            all_data = self.__session.query(
-                User, State, City, Amenity, Place, Review
-            ).all()
+            all_data = []
+            for table in self.__tables:
+                all_data.extend(self.__session.query(table).all())
         else:
             all_data = self.__session.query(cls).all()
         result = {}
