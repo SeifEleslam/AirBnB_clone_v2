@@ -50,6 +50,7 @@ class DBStorage:
         """Reload the database session."""
         from models.base_model import Base
         Base.metadata.create_all(self.__engine)
+
         Session = sessionmaker(expire_on_commit=False, bind=self.__engine)
         self.__session = scoped_session(Session)
 

@@ -11,8 +11,7 @@ class State(BaseModel, Base):
     """ State class """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-    if 'HBNB_TYPE_STORAGE' in os.environ and\
-            os.environ['HBNB_TYPE_STORAGE'] == 'db':
+    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
         cities = relationship(
             "City", backref="state", cascade="all, delete")
     else:

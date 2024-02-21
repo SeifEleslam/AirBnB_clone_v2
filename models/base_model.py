@@ -18,13 +18,13 @@ class BaseModel:
 
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
+        self.id = str(uuid.uuid4())
         if not kwargs:
-            from models import storage
-            self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
         else:
-            del kwargs['__class__']
+            if '__class__' in kwargs:
+                del kwargs['__class__']
             for key in kwargs:
                 if key in ['created_at', 'updated_at']:
                     setattr(self, key, datetime.fromisoformat(kwargs[key]))
