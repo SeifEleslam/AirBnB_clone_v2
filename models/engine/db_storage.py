@@ -1,3 +1,4 @@
+"""DBStorage Module"""
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine, MetaData
 from models.city import City
@@ -11,10 +12,12 @@ import os
 
 
 class DBStorage:
+    """Class for handling db engine"""
     __engine = None
     __session = None
 
     def __init__(self):
+        """Initializing The class based on env variables"""
         self.__engine = create_engine(
             'mysql+mysqldb://{}:{}@{}/{}'.format(
                 os.environ["HBNB_MYSQL_USER"],
@@ -27,7 +30,7 @@ class DBStorage:
             metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-
+        """Return all instances of a model."""
         if cls is None:
             all_data = self.__session.query(
                 User, State, City, Amenity, Place, Review
@@ -42,6 +45,7 @@ class DBStorage:
         return result
 
     def reload(self):
+        """Reload the database session."""
         from models.base_model import Base
         Base.metadata.create_all(self.__engine)
         Session = sessionmaker(
@@ -49,11 +53,14 @@ class DBStorage:
         self.__session = scoped_session(Session)
 
     def new(self, obj):
+        """Add an object to the session."""
         self.__session.add(obj)
 
     def save(self):
+        """Save the current state of the session."""
         self.__session.commit()
 
     def delete(self, obj):
+        """Delete an object from the session."""
         if obj is not None:
             self.__session.delete(obj)
