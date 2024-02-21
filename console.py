@@ -140,7 +140,7 @@ class HBNBCommand(cmd.Cmd):
                 continue
             try:
                 attr_val = literal_eval(attr_val)
-            except:
+            except Exception:
                 continue
             if not (type(attr_val) is str or type(attr_val)
                     is int or type(attr_val) is float):
