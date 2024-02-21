@@ -56,7 +56,8 @@ class DBStorage:
 
     def new(self, obj):
         """Add an object to the session."""
-        self.__session.add(obj)
+        if not self.__session.query(type(obj)).filter_by(id=obj.id).first():
+            self.__session.add(obj)
 
     def save(self):
         """Save the current state of the session."""
