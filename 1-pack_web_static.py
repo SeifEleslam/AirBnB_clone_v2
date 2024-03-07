@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """Archive Web Static"""
-from fabric.operations import run, sudo, local, put
+from fabric.operations import local
 from datetime import datetime
 
 
