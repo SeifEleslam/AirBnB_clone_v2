@@ -12,3 +12,4 @@ def do_pack():
     archive_name += f"{now.minute:02d}{now.second:02d}"
     local("mkdir -p versions")
     local(f"tar -czvf versions/{archive_name}.tgz web_static")
+    return f"versions/{archive_name}.tgz"
