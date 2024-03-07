@@ -14,13 +14,14 @@ def do_deploy(archive_path: str):
         put(archive_path, f'/tmp', True)
         run(f"mkdir -p /data/web_static/releases/{name}")
         run(f"tar -xzf /tmp/{file} -C /data/web_static/releases/{name}")
-        local(f'rm -rf {archive_path}')
         run(f'rm -rf /tmp/{file}')
         run(f"mv /data/web_static/releases/{name}/web_static/*\
             /data/web_static/releases/{name}")
         run(f'rm -rf /data/web_static/releases/{name}/web_static')
-        run(f'ln -sf /data/web_static/releases/{name} \
+        run('rm -rf /data/web_static/current')
+        run(f'ln -s /data/web_static/releases/{name}/ \
             /data/web_static/current')
         return True
-    except Exception:
+    except Exception as e:
+        print(e)
         return False
