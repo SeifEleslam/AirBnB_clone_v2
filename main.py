@@ -2,10 +2,10 @@
 """ Test link Many-To-Many Place <> Amenity
 """
 from models import *
+from models.amenity import Amenity
+from models.place import Place
 from models.state import State
 from models.city import City
-from models.place import Place
-from models. amenity import Amenity
 from models.user import User
 
 # creation of a State
