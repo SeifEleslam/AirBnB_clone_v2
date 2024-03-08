@@ -16,11 +16,12 @@ def do_deploy(archive_path: str):
         run(f"mkdir -p /data/web_static/releases/{name}")
         run(f"tar -xzf /tmp/{file} -C /data/web_static/releases/{name}")
         run(f'rm -rf /tmp/{file}')
-        run(
-            f"mv /data/web_static/releases/{name}/web_static/* /data/web_static/releases/{name}")
+        run(f"mv /data/web_static/releases/{name}/web_static/*\
+            /data/web_static/releases/{name}")
         run(f'rm -rf /data/web_static/releases/{name}/web_static')
         run('rm -rf /data/web_static/current')
-        run(f'ln -s /data/web_static/releases/{name}/ /data/web_static/current')
+        run(f'ln -s /data/web_static/releases/{name}/ \
+            /data/web_static/current')
         return True
     except Exception:
         return False
