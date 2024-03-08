@@ -8,10 +8,11 @@ env.hosts = ['100.26.160.239', '54.158.197.47']
 
 def do_deploy(archive_path: str):
     """Pack  the static files into a tgz."""
-    file = archive_path.split("/")[-1]
-    name = file.split(".")[0]
+
     try:
         put(archive_path, f'/tmp', True)
+        file = archive_path.split("/")[-1]
+        name = file.split(".")[0]
         run(f'rm -rf /data/web_static/releases/{name}')
         run(f"mkdir -p /data/web_static/releases/{name}")
         run(f"tar -xzf /tmp/{file} -C /data/web_static/releases/{name}")
