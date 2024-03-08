@@ -23,5 +23,4 @@ def do_deploy(archive_path: str):
             /data/web_static/current')
         return True
     except Exception as e:
-        print(e)
         return False
