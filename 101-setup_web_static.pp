@@ -1,3 +1,4 @@
+# Pre deployment
 file { '/data':
   ensure => directory,
   owner  => ubuntu,
