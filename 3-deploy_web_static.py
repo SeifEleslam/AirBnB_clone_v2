@@ -2,7 +2,7 @@
 """Archive Web Static"""
 
 from datetime import datetime
-from fabric.api import env, put, run, local, runs_once
+from fabric.api import env, put, run, local, runs_once, sudo
 env.hosts = ['100.26.160.239', '54.158.197.47']
 
 
@@ -25,17 +25,21 @@ def do_pack():
 def local_deploy(archive_path: str):
     file = archive_path.split("/")[-1]
     name = file.split(".")[0]
-    local(f'cp ${archive_path} /tmp')
-    local(f'rm -rf /data/web_static/releases/{name}')
-    local(f"mkdir -p /data/web_static/releases/{name}")
-    local(f"tar -xzf /tmp/{file} -C /data/web_static/releases/{name}")
-    local(f'rm -rf /tmp/{file}')
-    local(f"mv -f /data/web_static/releases/{name}/web_static/*\
-        /data/web_static/releases/{name}")
-    local(f'rm -rf /data/web_static/releases/{name}/web_static')
-    local('rm -rf /data/web_static/current')
-    local(f'ln -s /data/web_static/releases/{name}/ \
-        /data/web_static/current')
+    try:
+        sudo(f'cp ${archive_path} /tmp')
+        sudo(f'rm -rf /data/web_static/releases/{name}')
+        sudo(f"mkdir -p /data/web_static/releases/{name}")
+        sudo(f"tar -xzf /tmp/{file} -C /data/web_static/releases/{name}")
+        sudo(f'rm -rf /tmp/{file}')
+        sudo(f"mv -f /data/web_static/releases/{name}/web_static/*\
+            /data/web_static/releases/{name}")
+        sudo(f'rm -rf /data/web_static/releases/{name}/web_static')
+        sudo('rm -rf /data/web_static/current')
+        sudo(f'ln -s /data/web_static/releases/{name}/ \
+            /data/web_static/current')
+        return True
+    except Exception:
+        return False
 
 
 def host_deploy(archive_path: str):
@@ -62,9 +66,9 @@ def host_deploy(archive_path: str):
 def do_deploy(archive_path: str):
     """Pack  the static files into a tgz."""
     if (len(env.hosts) > 0):
-        host_deploy(archive_path)
+        return host_deploy(archive_path)
     else:
-        local_deploy(archive_path)
+        return local_deploy(archive_path)
 
 
 def deploy():
