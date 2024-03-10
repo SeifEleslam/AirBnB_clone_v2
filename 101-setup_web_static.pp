@@ -44,6 +44,10 @@ exec { 'update':
   content => 'Hello World',
 }
 
+-> exec { 'chown -R ubuntu:ubuntu /data/':
+  path => '/usr/bin/:/usr/local/bin/:/bin/',
+}
+
 -> file { '/etc/nginx/sites-available/default':
   ensure  => file,
   owner   => root,
