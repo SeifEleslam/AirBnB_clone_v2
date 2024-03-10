@@ -58,7 +58,7 @@ file { '/data':
 ',
 }
 
-service { 'nginx':
+-> service { 'nginx':
   ensure => running,
   enable => true,
 }
