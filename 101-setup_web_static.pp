@@ -4,18 +4,21 @@ file { '/data':
   group  => ubuntu,
   mode   => '0644',
 }
+
 -> file { '/data/web_static':
   ensure => directory,
   owner  => ubuntu,
   group  => ubuntu,
   mode   => '0644',
 }
+
 -> file { '/data/web_static/releases':
   ensure => directory,
   owner  => ubuntu,
   group  => ubuntu,
   mode   => '0644',
 }
+
 -> file { '/data/web_static/releases/test':
   ensure => directory,
   owner  => ubuntu,
@@ -31,7 +34,7 @@ file { '/data':
   content => "Hello World\n",
 }
 
-file { '/etc/nginx/sites-available/default':
+->file { '/etc/nginx/sites-available/default':
   ensure  => file,
   owner   => root,
   group   => root,
@@ -52,4 +55,9 @@ file { '/etc/nginx/sites-available/default':
     # ... other your existing server configuration
   }
 ',
+}
+
+service { 'nginx':
+  ensure => running,
+  enable => true,
 }
