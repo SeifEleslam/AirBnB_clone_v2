@@ -43,7 +43,6 @@ def do_deploy(archive_path: str):
 
 def deploy():
     """Deploy the application to production server."""
-    env.local = True
     file = do_pack()
     if file is None:
         return False
