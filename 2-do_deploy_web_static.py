@@ -24,5 +24,5 @@ def do_deploy(archive_path: str):
         run('rm -rf /data/web_static/current')
         run(f'ln -s /data/web_static/releases/{name}/ \
 /data/web_static/current')
-    except Exception :
+    except Exception:
         return False
