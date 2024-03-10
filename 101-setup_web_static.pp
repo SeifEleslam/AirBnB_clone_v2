@@ -32,10 +32,10 @@ file { '/data':
   owner   => ubuntu,
   group   => ubuntu,
   mode    => '0644',
-  content => "Hello World\n",
+  content => "Hello World",
 }
 
-->file { '/etc/nginx/sites-available/default':
+-> file { '/etc/nginx/sites-available/default':
   ensure  => file,
   owner   => root,
   group   => root,
