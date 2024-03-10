@@ -1,5 +1,14 @@
 # Pre deployment
-file { '/data':
+exec { 'update':
+  command  => 'apt-get update',
+  provider => shell,
+}
+
+-> package { 'nginx' :
+  ensure   => latest,
+}
+
+-> file { '/data':
   ensure => directory,
   owner  => ubuntu,
   group  => ubuntu,
@@ -32,7 +41,7 @@ file { '/data':
   owner   => ubuntu,
   group   => ubuntu,
   mode    => '0644',
-  content => "Hello World",
+  content => 'Hello World',
 }
 
 -> file { '/etc/nginx/sites-available/default':
