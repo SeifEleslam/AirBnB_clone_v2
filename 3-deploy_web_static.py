@@ -2,9 +2,11 @@
 """Archive Web Static"""
 
 from datetime import datetime
-from fabric.api import env, put, run, local, serial
+from fabric.api import env, put, run, local, runs_once
+env.hosts = ['100.26.160.239', '54.158.197.47']
 
 
+@runs_once
 def do_pack():
     """Pack  the static files into a tgz."""
     try:
@@ -19,7 +21,6 @@ def do_pack():
         return None
 
 
-@serial
 def do_deploy(archive_path: str):
     """Pack  the static files into a tgz."""
     file = archive_path.split("/")[-1]
@@ -46,9 +47,4 @@ def deploy():
     file = do_pack()
     if file is None:
         return False
-    state = True
-    env.hosts = ['100.26.160.239', '54.158.197.47']
-    for server in env.hosts:
-        env.host_string = server
-        state = state and do_deploy(file)
-    return state
+    return do_deploy(file)
