@@ -2,11 +2,11 @@
 """Archive Web Static"""
 
 from datetime import datetime
-from fabric.api import env, put, run, local, runs_once
-# env.hosts = ['100.26.160.239', '54.158.197.47']
+from fabric.api import env, put, run, local
+
+env.hosts = ['100.26.160.239', '54.158.197.47']
 
 
-@runs_once
 def do_pack():
     """Pack  the static files into a tgz."""
     try:
@@ -21,28 +21,8 @@ def do_pack():
         return None
 
 
-@runs_once
-def local_deploy(archive_path: str):
-    file = archive_path.split("/")[-1]
-    name = file.split(".")[0]
-    try:
-        local(f'sudo cp {archive_path} /tmp')
-        local(f'sudo rm -rf /data/web_static/releases/{name}')
-        local(f"sudo mkdir -p /data/web_static/releases/{name}")
-        local(f"sudo tar -xzf /tmp/{file} -C /data/web_static/releases/{name}")
-        local(f'sudo rm -rf /tmp/{file}')
-        local(f"sudo mv -f /data/web_static/releases/{name}/web_static/*\
-            /data/web_static/releases/{name}")
-        local(f'sudo rm -rf /data/web_static/releases/{name}/web_static')
-        local('sudo rm -rf /data/web_static/current')
-        local(f'sudo ln -s /data/web_static/releases/{name}/ \
-            /data/web_static/current')
-        return True
-    except Exception:
-        return False
-
-
-def host_deploy(archive_path: str):
+def do_deploy(archive_path: str):
+    """Pack  the static files into a tgz."""
     file = archive_path.split("/")[-1]
     name = file.split(".")[0]
     try:
@@ -57,18 +37,9 @@ def host_deploy(archive_path: str):
         run('rm -rf /data/web_static/current')
         run(f'ln -s /data/web_static/releases/{name}/ \
             /data/web_static/current')
-
         return True
     except Exception:
         return False
-
-
-def do_deploy(archive_path: str):
-    """Pack  the static files into a tgz."""
-    if (len(env.hosts) > 0):
-        return host_deploy(archive_path)
-    else:
-        return local_deploy(archive_path)
 
 
 def deploy():
