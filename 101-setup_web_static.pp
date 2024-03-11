@@ -29,11 +29,26 @@ exec { 'update':
   mode   => '0644',
 }
 
+-> file { '/data/web_static/current':
+  ensure => directory,
+  owner  => ubuntu,
+  group  => ubuntu,
+  mode   => '0644',
+}
+
 -> file { '/data/web_static/releases/test':
   ensure => directory,
   owner  => ubuntu,
   group  => ubuntu,
   mode   => '0644',
+}
+
+-> file { '/data/web_static/releases/current/index.html':
+  ensure  => file,
+  owner   => ubuntu,
+  group   => ubuntu,
+  mode    => '0644',
+  content => 'Hello World',
 }
 
 -> file { '/data/web_static/releases/test/index.html':
