@@ -43,7 +43,7 @@ exec { 'update':
   mode   => '0644',
 }
 
--> file { '/data/web_static/releases/current/index.html':
+-> file { '/data/web_static/current/index.html':
   ensure  => file,
   owner   => ubuntu,
   group   => ubuntu,
