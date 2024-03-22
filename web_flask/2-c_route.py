@@ -15,7 +15,7 @@ def hbnb():
     return "HBNB"
 
 
-@app.route('/product/<text>')
+@app.route('/c/<text>')
 def c_is_(text):
     return f"C {text}"
 
