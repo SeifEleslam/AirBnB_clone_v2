@@ -25,9 +25,10 @@ def list_cities_by_states(id):
         state = storage.all().get(f'State.{id}')
     else:
         states = storage.all(State).values()
+    print(states)
     return render_template(
         '9-states.html',
-        states=states, state=state)
+        states=states, state=state, all=id is None)
 
 
 if __name__ == '__main__':
