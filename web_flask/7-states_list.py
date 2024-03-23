@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """7 FLask Web APP"""
-from models.__init__ import storage
+from models import storage
 from models.state import State
 from flask import Flask, render_template
 app = Flask(__name__)
@@ -17,7 +17,6 @@ def teardown_storage(exception):
 def list_states():
     """List all states in the database."""
     states: list[State] = storage.all(State).values()
-    states = sorted(states, key=lambda x: x.name)
     return render_template('7-states_list.html', states=states)
 
 
