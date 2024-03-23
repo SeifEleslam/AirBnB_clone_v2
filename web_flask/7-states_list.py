@@ -13,10 +13,12 @@ app.url_map.strict_slashes = False
 def teardown_storage(_=None):
     """Close the database connection."""
     storage.close()
-# @app.teardown_appcontext
-# def teardown_storage(_=None):
-#     """Close the database connection."""
-#     storage.close()
+
+
+@app.teardown_appcontext
+def teardown_storage(_=None):
+    """Close the database connection."""
+    storage.close()
 
 
 @app.route("/states_list")
