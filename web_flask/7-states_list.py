@@ -20,7 +20,9 @@ def teardown_storage(_=None):
 @app.route("/states_list")
 def list_states():
     """List all states in the database."""
-    states = storage.all(State).values()
+    states = []
+    for _, state in storage.all(State).items():
+        states.append(state)
     return render_template('7-states_list.html', states=states)
 
 
