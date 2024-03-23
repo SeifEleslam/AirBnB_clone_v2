@@ -9,16 +9,18 @@ app.url_map.strict_slashes = False
 
 @app.teardown_appcontext
 def teardown_storage(exception):
+    """Close the database connection."""
     storage.close()
 
 
 @app.route("/states_list")
 def list_states():
-    states: list[State] = map(lambda itm: itm[1], storage.all(State).items())
-    states = sorted(states, key=lambda x: x.name)
+    """List all states in the database."""
+    states: list[State] = storage.all(State).values()
+    # states = sorted(states, key=lambda x: x.name)
     return render_template('7-states_list.html', states=states)
 
 
 if __name__ == '__main__':
     """Start running on http://localhost:5000/"""
-    app.run('0.0.0.0', '5000', True)
+    app.run('0.0.0.0', '5000')
