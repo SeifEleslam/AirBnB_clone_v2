@@ -9,6 +9,10 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
+@app.before_request
+def teardown_storage(_=None):
+    """Close the database connection."""
+    storage.close()
 # @app.teardown_appcontext
 # def teardown_storage(_=None):
 #     """Close the database connection."""
