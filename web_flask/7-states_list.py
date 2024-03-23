@@ -17,7 +17,7 @@ def teardown_storage(exception):
 def list_states():
     """List all states in the database."""
     states: list[State] = storage.all(State).values()
-    # states = sorted(states, key=lambda x: x.name)
+    states = sorted(states, key=lambda x: x.name)
     return render_template('7-states_list.html', states=states)
 
 
