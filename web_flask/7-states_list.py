@@ -7,16 +7,16 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.route("/states_list", strict_slashes=False)
+@app.teardown_appcontext
+def teardown_storage(exception):
+    storage.close()
+
+
+@app.route("/states_list")
 def list_states():
     states: list[State] = map(lambda itm: itm[1], storage.all(State).items())
     states = sorted(states, key=lambda x: x.name)
     return render_template('7-states_list.html', states=states)
-
-
-@app.teardown_appcontext
-def teardown_storage(exception):
-    storage.close()
 
 
 if __name__ == '__main__':
