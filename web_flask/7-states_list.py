@@ -21,8 +21,8 @@ def teardown_storage(_=None):
 def list_states():
     """List all states in the database."""
     states = []
-    for _, state in storage.all(State).items():
-        states.append(state)
+    for key in storage.all(State):
+        states.append(storage.all().get(key))
     return render_template('7-states_list.html', states=states)
 
 
