@@ -10,7 +10,7 @@ app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
-def teardown_storage(exception):
+def teardown_storage(_=None):
     """Close the database connection."""
     storage.close()
 
@@ -18,7 +18,7 @@ def teardown_storage(exception):
 @app.route("/states_list")
 def list_states():
     """List all states in the database."""
-    states = storage.all(State).copy().values()
+    states = storage.all(State).values()
     return render_template('7-states_list.html', states=states)
 
 
